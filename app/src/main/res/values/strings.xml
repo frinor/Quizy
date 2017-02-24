@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Quizy</string>
+    <string name="description">Lorem ipsum dolorem sum</string>
+
+    <string name="question1">1. What is daiquiri?</string>
+    <string name="answer1_1">African ethnic groups</string>
+    <string name="answer1_2">drink</string>
+    <string name="answer1_3">disease</string>
+
+    <string name="question2">2. Which one is part of the seven wonders of the ancient world? (multiple answers possible)</string>
+    <string name="answer2_1">Lighthouse of Alexandria</string>
+    <string name="answer2_2">Colosseum</string>
+    <string name="answer2_3">Hanging Gardens of Babylon</string>
+
+    <string name="question3">3. How many bits are 1 byte?</string>
+    <string name="question3_hint">Type here your answer</string>
+
+    <string name="question4">4. When was the Ford factory founded?</string>
+    <string name="answer4_1">1899</string>
+    <string name="answer4_2">1903</string>
+    <string name="answer4_3">1908</string>
+
+    <string name="question5">5. When did Columbus discover America?</string>
+    <string name="answer5_1">1301</string>
+    <string name="answer5_2">1526</string>
+    <string name="answer5_3">1492</string>
+
+    <string name="question6">6. Which is the sixth planet in the solar system?</string>
+    <string name="answer6_1">Uranus</string>
+    <string name="answer6_2">Saturn</string>
+    <string name="answer6_3">Neptune</string>
+
+
+    <string name="button_done">Check it!</string>
+    <string name="button_reset">Reset</string>
+    <string name="max_score_text">Wow! You did it perfect! You have <xliff:g id="score" example="5">%d</xliff:g> / <xliff:g id="max_score" example="12">%d</xliff:g> points.</string>
+    <string name="score_text">You have <xliff:g id="score" example="5">%d</xliff:g> / <xliff:g id="max_score" example="12">%d</xliff:g> points.</string>
+</resources>
