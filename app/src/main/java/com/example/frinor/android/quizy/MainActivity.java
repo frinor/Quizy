@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         // Restore state members from saved instance
         myScore = savedInstanceState.getInt("myScore");
 
-        Log.v("MainActivity", "myScore: " + myScore);
         answerCheck();
     }
 
@@ -265,7 +263,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, resultText, Toast.LENGTH_LONG).show();
         myScore = score;
 
-        Log.v("onCheckAnswers", "myScore: " + myScore);
         score = 0;
     }
 
