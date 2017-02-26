@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     int score = 0;
+    int myScore = 0;
     int maxScore = 17;
 
     int scoreRadio = 3;
@@ -45,19 +47,43 @@ public class MainActivity extends AppCompatActivity {
     String answer3 = "8";
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current score
+        savedInstanceState.putInt("myScore", myScore);
+
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+
+
+        // Restore state members from saved instance
+        myScore = savedInstanceState.getInt("myScore");
+
+        Log.v("MainActivity", "myScore: " + myScore);
+        answerCheck();
     }
 
 
     /**
      * Checks whether answer is correct in radio button answers
      */
-    public void getAnswerScoreRadio() {
+    public void getAnswerScoreRadio(boolean isAddScore) {
         int i = 1;
         for (String radio: answerScoreRadio) {
             String[] item = radio.split("-");
@@ -71,7 +97,9 @@ public class MainActivity extends AppCompatActivity {
 
 
             if (checked && i == index){
-                score += scoreRadio;
+                if (isAddScore) {
+                    score += scoreRadio;
+                }
                 radioButton.setTextColor(ContextCompat.getColor(this, R.color.colorCorrectAnswer));
             } else if (checked && i != index){
                 radioButton.setTextColor(ContextCompat.getColor(this, R.color.colorWrongAnswer));
@@ -92,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Checks whether answer is correct in checkbox answers
      */
-    public void getAnswerScoreCheckbox() {
+    public void getAnswerScoreCheckbox(boolean isAddScore) {
         int i = 1;
         for (String checkBoxItem: answerScoreCheckbox) {
             String[] item = checkBoxItem.split("-");
@@ -107,10 +135,14 @@ public class MainActivity extends AppCompatActivity {
 
 
             if (checked && i == index){
-                score += scoreCheckbox;
+                if (isAddScore) {
+                    score += scoreCheckbox;
+                }
                 checkBox.setTextColor(ContextCompat.getColor(this, R.color.colorCorrectAnswer));
             } else if (checked && i != index){
-                score -= scoreCheckbox;
+                if (isAddScore) {
+                    score -= scoreCheckbox;
+                }
                 checkBox.setTextColor(ContextCompat.getColor(this, R.color.colorWrongAnswer));
             } else {
                 checkBox.setTextColor(Color.rgb(0,0,0));
@@ -131,12 +163,14 @@ public class MainActivity extends AppCompatActivity {
      * Checks whether the input text is correct
      *
      */
-    public void getAnswerScoreEditText(){
+    public void getAnswerScoreEditText(boolean isAddScore){
         EditText answerText = (EditText) findViewById(R.id.answer3);
         String answerText3 = answerText.getText().toString();
 
         if (answer3.equals(answerText3)){
-            score += scoreEditText;
+            if (isAddScore) {
+                score += scoreEditText;
+            }
             answerText.setTextColor(ContextCompat.getColor(this, R.color.colorCorrectAnswer));
         } else {
             answerText.setTextColor(ContextCompat.getColor(this, R.color.colorWrongAnswer));
@@ -148,9 +182,20 @@ public class MainActivity extends AppCompatActivity {
      * Checks the answers and calculate score.
      */
     public void getScores(){
-        getAnswerScoreRadio();
-        getAnswerScoreCheckbox();
-        getAnswerScoreEditText();
+        getAnswerScoreRadio(true);
+        getAnswerScoreCheckbox(true);
+        getAnswerScoreEditText(true);
+    }
+
+
+    /**
+     * Checks the checked item status only, whether the answer is true or false
+     * without adding score to the correct answers
+     */
+    public void answerCheck(){
+        getAnswerScoreRadio(false);
+        getAnswerScoreCheckbox(false);
+        getAnswerScoreEditText(false);
     }
 
 
@@ -218,8 +263,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Toast.makeText(this, resultText, Toast.LENGTH_LONG).show();
+        myScore = score;
+
+        Log.v("onCheckAnswers", "myScore: " + myScore);
         score = 0;
     }
 
 }
-
